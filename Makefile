@@ -3,21 +3,22 @@ NAME			:= cub3d
 CC				:= cc
 CFLAGS			:= -Wall -Wextra -Werror 
 
-SRCS_B			:=	parse/parser.c
+SRCS			:=	parse/parser.c
+GNL				:=	gnl/get_next_line.c gnl/get_next_line_utils.c
+SRCS 			+= $(GNL)
 				
 LIBFT_PATH		:=	libft/
 LIBFT			:=	libft/libft.a
 
-OBJS_B			:=	$(SRCS_B:.c=.o)
+OBJS			:=	$(SRCS:.c=.o)
 
 all:	$(NAME)
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS)  $(OBJS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
 	make -C $(LIBFT_PATH)
 	make -C $(LIBFT_PATH) bonus
-
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -L $(LIBFT_PATH)  -o $(NAME)
 
 clean:
 	@make clean -C $(LIBFT_PATH)
